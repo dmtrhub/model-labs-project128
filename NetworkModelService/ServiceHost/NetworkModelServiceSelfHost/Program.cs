@@ -5,12 +5,13 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.ServiceModel.Channels;
 using FTN.Common;
+using NMSService = FTN.Services.NetworkModelService.NetworkModelService;
 
 namespace FTN.Services.NetworkModelService
 {
 	public class Program
 	{
-		
+
 		private static void Main(string[] args)
 		{
 			try
@@ -19,7 +20,7 @@ namespace FTN.Services.NetworkModelService
 				CommonTrace.WriteTrace(CommonTrace.TraceInfo, message);
 				Console.WriteLine("\n{0}\n", message);
 
-				using (NetworkModelService nms = new NetworkModelService())
+				using (NMSService nms = new NMSService())
 				{					
 					nms.Start();
 

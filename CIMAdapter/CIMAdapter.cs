@@ -79,16 +79,30 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter
 			Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 			try
 			{
+				LogManager.Log("DEBUG: Starting LoadModelFromExtractFile...", LogLevel.Info);
+				LogManager.Log($"DEBUG: extractType = {extractType}", LogLevel.Info);
+				
 				ProfileManager.LoadAssembly(extractType, out assembly);
 				if (assembly != null)
 				{
+					LogManager.Log("DEBUG: Assembly loaded successfully", LogLevel.Info);
+					
 					CIMModel cimModel = new CIMModel();
+					LogManager.Log("DEBUG: CIMModel created", LogLevel.Info);
+					
 					CIMModelLoaderResult modelLoadResult = CIMModelLoader.LoadCIMXMLModel(extract, ProfileManager.Namespace, out cimModel);
+                    LogManager.Log($"DEBUG: CIMModelLoader result - Success: {modelLoadResult.Success}, ObjectCount: {cimModel?.CountObjectsInModelMap ?? 0}", LogLevel.Info);
+                    LogManager.Log($"DEBUG: ModelLoadResult report: {modelLoadResult.Report}", LogLevel.Info);
+					
 					if (modelLoadResult.Success)
 					{
 						concreteModelResult = new ConcreteModel();
+						LogManager.Log("DEBUG: ConcreteModel created", LogLevel.Info);
+						
 						ConcreteModelBuilder builder = new ConcreteModelBuilder();
 						ConcreteModelBuildingResult modelBuildResult = builder.GenerateModel(cimModel, assembly, ProfileManager.Namespace, ref concreteModelResult);
+						LogManager.Log($"DEBUG: ConcreteModelBuilder result - Success: {modelBuildResult.Success}, ModelMap count: {concreteModelResult?.ModelMap?.Count ?? 0}", LogLevel.Info);
+						LogManager.Log($"DEBUG: ModelBuildResult report: {modelBuildResult.Report}", LogLevel.Info);
 
 						if (modelBuildResult.Success)
 						{
@@ -98,12 +112,18 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter
 					}
 					else
 					{
+						LogManager.Log($"DEBUG: CIMModelLoader FAILED - {modelLoadResult.Report}", LogLevel.Info);
 						log = modelLoadResult.Report.ToString();
 					}
+				}
+				else
+				{
+					LogManager.Log("DEBUG: Assembly je NULL!", LogLevel.Info);
 				}
 			}
 			catch (Exception e)
 			{
+				LogManager.Log($"DEBUG: Exception - {e.Message}\n{e.StackTrace}", LogLevel.Info);
 				log = e.Message;
 			}
 			finally
@@ -124,40 +144,57 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter
 
 				switch (extractType)
 				{
-					case SupportedProfiles.PowerTransformer:
-						{
-							// transformation to DMS delta					
-							TransformAndLoadReport report = PowerTransformerImporter.Instance.CreateNMSDelta(concreteModel);
+					//case SupportedProfiles.PowerTransformer:
+					//	{
+					//		// transformation to DMS delta					
+					//		TransformAndLoadReport report = PowerTransformerImporter.Instance.CreateNMSDelta(concreteModel);
 
-							if (report.Success)
-							{
-								nmsDelta = PowerTransformerImporter.Instance.NMSDelta;
-								success = true;
-							}
-							else
-							{
-								success = false;
-							}
-							log = report.Report.ToString();
-							PowerTransformerImporter.Instance.Reset();
+					//		if (report.Success)
+					//		{
+					//			nmsDelta = PowerTransformerImporter.Instance.NMSDelta;
+					//			success = true;
+					//		}
+					//		else
+					//		{
+					//			success = false;
+					//		}
+					//		log = report.Report.ToString();
+					//		PowerTransformerImporter.Instance.Reset();
 
-							break;
-						}
-					default:
-						{
-							LogManager.Log(string.Format("Import of {0} data is NOT SUPPORTED.", extractType), LogLevel.Warning);
-							break;
-						}
+					//		break;
+					//	}
+			case SupportedProfiles.SwitchingModel:
+				{
+					TransformAndLoadReport report = SwitchingImporter.Instance.CreateNMSDelta(concreteModel);
+
+					if (report.Success)
+					{
+						nmsDelta = SwitchingImporter.Instance.NMSDelta;
+						success = true;
+					}
+					else
+					{
+						success = false;
+					}
+					log = report.Report.ToString();
+					SwitchingImporter.Instance.Reset();
+
+					break;
 				}
+			default:
+				{
+					LogManager.Log(string.Format("Import of {0} data is NOT SUPPORTED.", extractType), LogLevel.Warning);
+					break;
+				}
+		    }
 
-				return success;
-			}
-			catch (Exception ex)
-			{
-				LogManager.Log(string.Format("Import unsuccessful: {0}", ex.StackTrace), LogLevel.Error);
-				return false;
-			}
-		}
-
+		    return success;
+	    }
+	    catch (Exception ex)
+	    {
+		    LogManager.Log(string.Format("Import unsuccessful: {0}", ex.StackTrace), LogLevel.Error);
+		    return false;
+	    }
+    }
 	}
 }

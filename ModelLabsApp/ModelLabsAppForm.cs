@@ -28,8 +28,7 @@ namespace ModelLabsApp
 			buttonApplyDelta.Enabled = false;
 
 			comboBoxProfile.DataSource = Enum.GetValues(typeof(SupportedProfiles));
-			comboBoxProfile.SelectedItem = SupportedProfiles.PowerTransformer;
-			//comboBoxProfile.Enabled = false; //// other profiles are not supported
+			comboBoxProfile.SelectedItem = SupportedProfiles.SwitchingModel; // SWITCHING
 		}
 
 		private void ShowOpenCIMXMLFileDialog()
@@ -38,6 +37,40 @@ namespace ModelLabsApp
 			openFileDialog.Title = "Open CIM Document File..";
 			openFileDialog.Filter = "CIM-XML Files|*.xml;*.txt;*.rdf|All Files|*.*";
 			openFileDialog.RestoreDirectory = true;
+
+			// ✅ ISPRAVKA: Pronađi SwitchingModel.xml na nekoliko mogućih lokacija
+			string[] possiblePaths = new string[]
+			{
+				// Lokacija 1: Pored bin foldera
+				Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "CIMAdapter", "XML", "SwitchingModel.xml"),
+				
+				// Lokacija 2: Direktno u bin foldera
+				Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SwitchingModel.xml"),
+				
+				// Lokacija 3: U projektu
+				Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "CIMAdapter", "XML", "SwitchingModel.xml"),
+				
+				// Lokacija 4: Hard-coded putanja
+				@"C:\Users\Dimitrije\Desktop\Fakultet\Modeli podataka\Projekat\ModelLabsProjekat\ModelLabs\CIMAdapter\XML\SwitchingModel.xml"
+			};
+
+			// Pronađi prvi fajl koji postoji
+			string foundPath = null;
+			foreach (var path in possiblePaths)
+			{
+				string fullPath = Path.GetFullPath(path);
+				if (File.Exists(fullPath))
+				{
+					foundPath = fullPath;
+					break;
+				}
+			}
+
+			if (foundPath != null)
+			{
+				openFileDialog.FileName = foundPath;
+				openFileDialog.InitialDirectory = Path.GetDirectoryName(foundPath);
+			}
 
 			DialogResult dialogResponse = openFileDialog.ShowDialog(this);
 			if (dialogResponse == DialogResult.OK)

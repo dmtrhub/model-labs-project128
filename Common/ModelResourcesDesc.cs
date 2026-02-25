@@ -618,6 +618,17 @@ namespace FTN.Common
 				properties.AddRange(this.GetResourcePropertiesDesc(ancestorId).PropertyIds);
 			}
 
+			// ✅ Fallback: ako IDOBJ nije pronađen kao predak, dodaj ga eksplicitno
+			// (GetResourceAncestors ima specijalnu logiku koja može biti problem za neke klase)
+			if (code != ModelCode.IDOBJ && !ancestorIds.Contains(ModelCode.IDOBJ))
+			{
+				try
+				{
+					properties.AddRange(this.GetResourcePropertiesDesc(ModelCode.IDOBJ).PropertyIds);
+				}
+				catch { }
+			}
+
 			int i = 0;
 			while (i < properties.Count)
 			{
@@ -868,18 +879,43 @@ namespace FTN.Common
 		{			
 			typeIdsInInsertOrder.Add(ModelCode.BASEVOLTAGE);
 			typeIdsInInsertOrder.Add(ModelCode.LOCATION);
+			
+			// PRVO: Reference klase (bez zavisnosti)
+			typeIdsInInsertOrder.Add(ModelCode.CURVE);
+			typeIdsInInsertOrder.Add(ModelCode.REGULARINTSCHEDULE);
+			typeIdsInInsertOrder.Add(ModelCode.IRREGULARINTSCHEDULE);
+			typeIdsInInsertOrder.Add(ModelCode.OUTAGESCHEDULE);
+
+			// ZATIM: Klase koje zavise (sa referencijama)
+			typeIdsInInsertOrder.Add(ModelCode.CURVEDATA);
+			typeIdsInInsertOrder.Add(ModelCode.REGULARTIMEPOINT);
+			typeIdsInInsertOrder.Add(ModelCode.IRREGULARTIMEPOINT);
+			typeIdsInInsertOrder.Add(ModelCode.SWITCHINGOPERATION);	// SWOP mora biti pre Switch-a!
+			typeIdsInInsertOrder.Add(ModelCode.SWITCH);				// Switch referencira SWOP
+			
+			// OSTATAK
 			typeIdsInInsertOrder.Add(ModelCode.POWERTR);
 			typeIdsInInsertOrder.Add(ModelCode.POWERTRWINDING);
-			typeIdsInInsertOrder.Add(ModelCode.WINDINGTEST);			
+			typeIdsInInsertOrder.Add(ModelCode.WINDINGTEST);
 		}
-
+            
 		private void InitializeNotSettablePropertyIds()
-		{			
+		{
+			// GID uvijek nije settable
 			notSettablePropertyIds.Add(ModelCode.IDOBJ_GID);
+
+			// Postojeci model (PowerTransformer profil) - SAMO LISTE (targeti)
 			notSettablePropertyIds.Add(ModelCode.BASEVOLTAGE_CONDEQS);
 			notSettablePropertyIds.Add(ModelCode.LOCATION_PSRS);
+			notSettablePropertyIds.Add(ModelCode.POWERTR_WINDINGS);
 			notSettablePropertyIds.Add(ModelCode.POWERTRWINDING_TESTS);
-            notSettablePropertyIds.Add(ModelCode.POWERTR_WINDINGS);	
+
+			// Switching profil - SAMO LISTE (targeti), obicne reference su settable!
+			notSettablePropertyIds.Add(ModelCode.CURVE_CURVEDATAS);
+			notSettablePropertyIds.Add(ModelCode.REGULARINTSCHEDULE_TIMEPOINTS);
+			notSettablePropertyIds.Add(ModelCode.IRREGULARINTSCHEDULE_TIMEPOINTS);
+			notSettablePropertyIds.Add(ModelCode.OUTAGESCHEDULE_SWITCHINGOPERATIONS);
+			notSettablePropertyIds.Add(ModelCode.SWITCHINGOPERATION_SWITCHES);
 		}
 	
 		# endregion Initialization of metadata

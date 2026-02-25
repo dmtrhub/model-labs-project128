@@ -43,6 +43,8 @@ namespace FTN.Services.NetworkModelService.DataModel.Core
 		/// Description of identified object
 		/// </summary>		
 		private string description = string.Empty;
+
+		private string aliasName = string.Empty;
 		
 		/// <summary>
 		/// Initializes a new instance of the IdentifiedObject class.
@@ -101,6 +103,15 @@ namespace FTN.Services.NetworkModelService.DataModel.Core
 		{
 			get { return description; }
 			set { description = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets alias name of the entity (identified object).
+		/// </summary>			
+		public string AliasName
+		{
+			get { return aliasName; }
+			set { aliasName = value; }
 		}		
 
 		public static bool operator ==(IdentifiedObject x, IdentifiedObject y)
@@ -132,9 +143,9 @@ namespace FTN.Services.NetworkModelService.DataModel.Core
 			}
 			else
 			{
-				IdentifiedObject io = (IdentifiedObject)x;
-				return ((io.GlobalId == this.GlobalId) && (io.name == this.name) && (io.mrid == this.mrid) &&
-						(io.description == this.description));
+			IdentifiedObject io = (IdentifiedObject)x;
+			return ((io.GlobalId == this.GlobalId) && (io.name == this.name) && (io.mrid == this.mrid) &&
+					(io.description == this.description) && (io.aliasName == this.aliasName));
 			}
 		}
 		
@@ -153,6 +164,7 @@ namespace FTN.Services.NetworkModelService.DataModel.Core
 				case ModelCode.IDOBJ_NAME:
 				case ModelCode.IDOBJ_DESCRIPTION:
 				case ModelCode.IDOBJ_MRID:
+				case ModelCode.IDOBJ_ALIASNAME:
 					return true;
 
 				default:				
@@ -176,8 +188,12 @@ namespace FTN.Services.NetworkModelService.DataModel.Core
 					property.SetValue(mrid);
 					break;
 
-                case ModelCode.IDOBJ_DESCRIPTION:
+			case ModelCode.IDOBJ_DESCRIPTION:
                     property.SetValue(description);
+                    break;
+
+                case ModelCode.IDOBJ_ALIASNAME:
+                    property.SetValue(aliasName);
                     break;
 			
 				default:
@@ -195,9 +211,13 @@ namespace FTN.Services.NetworkModelService.DataModel.Core
 					name = property.AsString();					
 					break;
 
-				case ModelCode.IDOBJ_DESCRIPTION:
-					description = property.AsString();					
-					break;
+			case ModelCode.IDOBJ_DESCRIPTION:
+				description = property.AsString();					
+				break;
+
+			case ModelCode.IDOBJ_ALIASNAME:
+				aliasName = property.AsString();					
+				break;
 
 				case ModelCode.IDOBJ_MRID:					
 					mrid = property.AsString();

@@ -10,9 +10,10 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter.Manager
 		SwitchingEquipment,
 		OverheadLines,
 		UndergroundCables,
-		ProtectionDevices
-	};
-
+		ProtectionDevices,
+        SwitchingModel = 10
+    };
+                
 
 	/// <summary>
 	/// ProfileManager
@@ -45,15 +46,34 @@ namespace FTN.ESI.SIMES.CIM.CIMAdapter.Manager
 		{
 			try
 			{
-				assembly = Assembly.LoadFrom(string.Format(".\\{0}", ProfileManager.GetProfileDLLName(profile)));
+				string dllPath = string.Format(".\\{0}", ProfileManager.GetProfileDLLName(profile));
+				
+				// ✅ DEBUG
+				Console.WriteLine($"[DEBUG] Pokušaj učitavanja DLL iz: {dllPath}");
+				Console.WriteLine($@"[DEBUG] Puni path: {System.IO.Path.GetFullPath(dllPath)}""");
+				
+				if (!System.IO.File.Exists(dllPath))
+				{
+					Console.WriteLine($"[ERROR] DLL NIJE PRONAĐEN na putanji: {dllPath}");
+					assembly = null;
+					return false;
+				}
+				
+				assembly = Assembly.LoadFrom(dllPath);
+				
+				Console.WriteLine($"[SUCCESS] DLL uspješno učitan!");
+				Console.WriteLine($"[INFO] Tip: {profile.ToString()}");
+				
+				return true;
 			}
 			catch (Exception e)
 			{
 				assembly = null;
-				LogManager.Log(string.Format("Error during Assembly load. Profile: {0} ; Message: {1}", profile, e.Message), LogLevel.Error);
+				Console.WriteLine($"[ERROR] {e.Message}");
+				LogManager.Log(string.Format("Error during Assembly load. Profile: {0} ; Message: {1}", 
+					profile, e.Message), LogLevel.Error);
 				return false;
 			}
-			return true;
 		}
 
 		public static bool LoadAssembly(string path, out Assembly assembly)

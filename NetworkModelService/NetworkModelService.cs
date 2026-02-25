@@ -17,13 +17,14 @@ namespace FTN.Services.NetworkModelService
 		private List<ServiceHost> hosts = null;
 
 		public NetworkModelService()
-		{			
-			nm = new NetworkModel();			
+		{	
+            Delta.ResourceDescs = null;  // RESETUJ KEŠIRANU INSTANCU
+            nm = new NetworkModel();      // Sada će kreirati NOVU instancu sa novim tipovima
 			GenericDataAccess.NetworkModel = nm;
             ResourceIterator.NetworkModel = nm;
 			InitializeHosts();
 		}
-	
+	        
 		public void Start()
 		{
 			StartHosts();			

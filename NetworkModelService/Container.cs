@@ -122,22 +122,61 @@ namespace FTN.Services.NetworkModelService
 			IdentifiedObject io = null;			
 			switch ((DMSType)type)
 			{
-				case DMSType.BASEVOLTAGE:
-					io = new BaseVoltage(globalId);
+				//case DMSType.BASEVOLTAGE:
+				//	io = new BaseVoltage(globalId);
+				//	break;
+
+				//case DMSType.LOCATION:
+				//	io = new Location(globalId);
+				//	break;
+					
+				//case DMSType.POWERTR:
+				//	io = new PowerTransformer(globalId);
+				//	break;
+					
+				//case DMSType.POWERTRWINDING:
+				//	io = new TransformerWinding(globalId);
+				//	break;
+					
+				//case DMSType.WINDINGTEST:
+				//	io = new WindingTest(globalId);
+				//	break;
+
+				case DMSType.CURVE:
+					io = new Curve(globalId);
 					break;
 
-				case DMSType.LOCATION:
-					io = new Location(globalId);
+				case DMSType.CURVEDATA:
+					io = new CurveData(globalId);
 					break;
-				case DMSType.POWERTR:
-					io = new PowerTransformer(globalId);
+
+				case DMSType.SWITCH:
+					io = new Switch(globalId);
 					break;
-				case DMSType.POWERTRWINDING:
-					io = new TransformerWinding(globalId);
+
+				case DMSType.SWITCHINGOPERATION:
+					io = new SwitchingOperation(globalId);
 					break;
-				case DMSType.WINDINGTEST:
-					io = new WindingTest(globalId);
-					break;			
+
+				case DMSType.REGULARINTSCHEDULE:
+					io = new RegularIntervalSchedule(globalId);
+					break;
+
+				case DMSType.REGULARTIMEPOINT:
+					io = new RegularTimePoint(globalId);
+					break;
+
+				case DMSType.IRREGULARINTSCHEDULE:
+					io = new IrregularIntervalSchedule(globalId);
+					break;
+
+				case DMSType.IRREGULARTIMEPOINT:
+					io = new IrregularTimePoint(globalId);
+					break;
+
+				case DMSType.OUTAGESCHEDULE:
+					io = new OutageSchedule(globalId);
+					break;
 
 				default:					
 					string message = String.Format("Failed to create entity because specified type ({0}) is not supported.", type);

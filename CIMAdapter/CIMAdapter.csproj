@@ -74,7 +74,11 @@
   <ItemGroup>
     <Reference Include="PowerTransformerCIMProfile_Labs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\PowerTransformerCIMProfile_Labs.dll</HintPath>
+      <HintPath>.\PowerTransformerCIMProfile_Labs.dll</HintPath>
+    </Reference>
+    <Reference Include="SwitchingModelCIMProfile_Labs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\DLL\SwitchingModelCIMProfile_Labs.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -90,6 +94,8 @@
     <Compile Include="Importer\ImportHelper.cs" />
     <Compile Include="Importer\PowerTransformerConverter.cs" />
     <Compile Include="Importer\PowerTransformerImporter.cs" />
+    <Compile Include="Importer\SwitchingConverter.cs" />
+    <Compile Include="Importer\SwitchingImporter.cs" />
     <Compile Include="Manager\LogManager.cs" />
     <Compile Include="Manager\ProfileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

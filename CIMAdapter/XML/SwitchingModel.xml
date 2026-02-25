@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:j.0="http://iec.ch/TC57/CIM-generic#">
+
+	<!--   ====== CURVES ======   -->
+	<rdf:Description rdf:about="#CURVE_001">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#Curve"/>
+		<j.0:mRID>CURVE_001</j.0:mRID>
+		<j.0:name>Characteristic Curve 1</j.0:name>
+		<j.0:curveStyle>straightLineYValues</j.0:curveStyle>
+		<j.0:xMultiplier>none</j.0:xMultiplier>
+		<j.0:xUnit>A</j.0:xUnit>
+		<j.0:y1Multiplier>none</j.0:y1Multiplier>
+		<j.0:y1Unit>V</j.0:y1Unit>
+	</rdf:Description>
+
+	<!--   ====== CURVE DATA ======   -->
+	<rdf:Description rdf:about="#CURVEDATA_001">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#CurveData"/>
+		<j.0:mRID>CURVEDATA_001</j.0:mRID>
+		<j.0:name>Point 1</j.0:name>
+		<j.0:xvalue>10.5</j.0:xvalue>
+		<j.0:y1value>220.0</j.0:y1value>
+		<j.0:y2value>0.0</j.0:y2value>
+		<j.0:y3value>0.0</j.0:y3value>
+		<j.0:Curve rdf:resource="#CURVE_001"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="#CURVEDATA_002">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#CurveData"/>
+		<j.0:mRID>CURVEDATA_002</j.0:mRID>
+		<j.0:name>Point 2</j.0:name>
+		<j.0:xvalue>20.5</j.0:xvalue>
+		<j.0:y1value>230.0</j.0:y1value>
+		<j.0:y2value>0.0</j.0:y2value>
+		<j.0:y3value>0.0</j.0:y3value>
+		<j.0:Curve rdf:resource="#CURVE_001"/>
+	</rdf:Description>
+
+	<!--   ====== REGULAR INTERVAL SCHEDULES ======   -->
+	<rdf:Description rdf:about="#REGSCHEDULE_001">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#RegularIntervalSchedule"/>
+		<j.0:mRID>REGSCHEDULE_001</j.0:mRID>
+		<j.0:name>Regular Schedule 1</j.0:name>
+		<j.0:startTime>2024-02-14T08:00:00</j.0:startTime>
+		<j.0:endTime>2024-02-14T16:00:00</j.0:endTime>
+		<j.0:timeStep>3600</j.0:timeStep>
+	</rdf:Description>
+
+	<!--   ====== REGULAR TIME POINTS ======   -->
+	<rdf:Description rdf:about="#REGTIMEPOINT_001">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#RegularTimePoint"/>
+		<j.0:mRID>REGTIMEPOINT_001</j.0:mRID>
+		<j.0:name>TimePoint 1</j.0:name>
+		<j.0:sequenceNumber>1</j.0:sequenceNumber>
+		<j.0:value1>100.5</j.0:value1>
+		<j.0:value2>50.2</j.0:value2>
+		<j.0:IntervalSchedule rdf:resource="#REGSCHEDULE_001"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="#REGTIMEPOINT_002">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#RegularTimePoint"/>
+		<j.0:mRID>REGTIMEPOINT_002</j.0:mRID>
+		<j.0:name>TimePoint 2</j.0:name>
+		<j.0:sequenceNumber>2</j.0:sequenceNumber>
+		<j.0:value1>110.5</j.0:value1>
+		<j.0:value2>55.2</j.0:value2>
+		<j.0:IntervalSchedule rdf:resource="#REGSCHEDULE_001"/>
+	</rdf:Description>
+
+	<!--   ====== IRREGULAR INTERVAL SCHEDULES ======   -->
+	<rdf:Description rdf:about="#IRREGSCHEDULE_001">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#IrregularIntervalSchedule"/>
+		<j.0:mRID>IRREGSCHEDULE_001</j.0:mRID>
+		<j.0:name>Irregular Schedule 1</j.0:name>
+		<j.0:startTime>2024-02-14T09:00:00</j.0:startTime>
+	</rdf:Description>
+
+	<!--   ====== IRREGULAR TIME POINTS ======   -->
+	<rdf:Description rdf:about="#IRREGTIMEPOINT_001">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#IrregularTimePoint"/>
+		<j.0:mRID>IRREGTIMEPOINT_001</j.0:mRID>
+		<j.0:name>IrregTimePoint 1</j.0:name>
+		<j.0:time>120.5</j.0:time>
+		<j.0:value1>95.5</j.0:value1>
+		<j.0:value2>48.2</j.0:value2>
+		<j.0:IntervalSchedule rdf:resource="#IRREGSCHEDULE_001"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="#IRREGTIMEPOINT_002">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#IrregularTimePoint"/>
+		<j.0:mRID>IRREGTIMEPOINT_002</j.0:mRID>
+		<j.0:name>IrregTimePoint 2</j.0:name>
+		<j.0:time>180.5</j.0:time>
+		<j.0:value1>105.5</j.0:value1>
+		<j.0:value2>52.2</j.0:value2>
+		<j.0:IntervalSchedule rdf:resource="#IRREGSCHEDULE_001"/>
+	</rdf:Description>
+
+	<!--   ====== OUTAGE SCHEDULES ======   -->
+	<rdf:Description rdf:about="#OUTAGE_001">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#OutageSchedule"/>
+		<j.0:mRID>OUTAGE_001</j.0:mRID>
+		<j.0:name>Maintenance Schedule 2024</j.0:name>
+		<j.0:startTime>2024-02-14T08:00:00</j.0:startTime>
+	</rdf:Description>
+
+	<!--   ====== SWITCHES ======   -->
+	<rdf:Description rdf:about="#SW_001">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#Switch"/>
+		<j.0:mRID>SW_001</j.0:mRID>
+		<j.0:name>Main Breaker 1</j.0:name>
+	</rdf:Description>
+	<rdf:Description rdf:about="#SW_002">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#Switch"/>
+		<j.0:mRID>SW_002</j.0:mRID>
+		<j.0:name>Main Breaker 2</j.0:name>
+	</rdf:Description>
+	<rdf:Description rdf:about="#SW_003">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#Switch"/>
+		<j.0:mRID>SW_003</j.0:mRID>
+		<j.0:name>Isolating Switch 1</j.0:name>
+	</rdf:Description>
+
+	<!--   ====== SWITCHING OPERATIONS ======   -->
+	<rdf:Description rdf:about="#SWOP_001">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#SwitchingOperation"/>
+		<j.0:mRID>SWOP_001</j.0:mRID>
+		<j.0:name>Open Operation 1</j.0:name>
+		<j.0:newState>open</j.0:newState>
+		<j.0:operationTime>2024-02-14T10:00:00</j.0:operationTime>
+		<j.0:OutageSchedule rdf:resource="#OUTAGE_001"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="#SWOP_002">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#SwitchingOperation"/>
+		<j.0:mRID>SWOP_002</j.0:mRID>
+		<j.0:name>Close Operation 1</j.0:name>
+		<j.0:newState>close</j.0:newState>
+		<j.0:operationTime>2024-02-14T11:30:00</j.0:operationTime>
+		<j.0:OutageSchedule rdf:resource="#OUTAGE_001"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="#SWOP_003">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#SwitchingOperation"/>
+		<j.0:mRID>SWOP_003</j.0:mRID>
+		<j.0:name>Open Operation 2</j.0:name>
+		<j.0:newState>open</j.0:newState>
+		<j.0:operationTime>2024-02-14T13:15:00</j.0:operationTime>
+		<j.0:OutageSchedule rdf:resource="#OUTAGE_001"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="#SWOP_004">
+		<rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#SwitchingOperation"/>
+		<j.0:mRID>SWOP_004</j.0:mRID>
+		<j.0:name>Close Operation 2</j.0:name>
+		<j.0:newState>close</j.0:newState>
+		<j.0:operationTime>2024-02-14T14:45:00</j.0:operationTime>
+		<j.0:OutageSchedule rdf:resource="#OUTAGE_001"/>
+	</rdf:Description>
+
+</rdf:RDF>

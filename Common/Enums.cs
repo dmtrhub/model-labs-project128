@@ -51,5 +51,74 @@ namespace FTN.Common
 		Primary = 1,
 		Secondary = 2,
 		Tertiary = 3
-	}			
+	}	
+	
+	public enum SwitchState : short
+	{
+		open = 0,
+		close = 1
+	}
+
+	/// <summary>
+	/// CIM CurveStyle Enumeration
+	/// </summary>
+	public enum CurveStyle : short
+	{
+		straightLineYValues = 1,
+		constantYValue = 2,
+		formula = 3,
+		rampYValue = 4
+	}
+
+	/// <summary>
+	/// CIM UnitMultiplier Enumeration
+	/// </summary>
+	public enum UnitMultiplier : short
+	{
+		none = 0,
+		m = 1,
+		c = 2,
+		d = 3,
+		k = 4,
+		M = 5,
+		G = 6,
+		T = 7,
+		p = 8,
+		n = 9,
+		micro = 10
+	}
+
+	/// <summary>
+	/// CIM UnitSymbol Enumeration
+	/// </summary>
+	public enum UnitSymbol : short
+	{
+		none = 0,
+		V = 1,
+		A = 2,
+		W = 3,
+		VAr = 4,
+		VA = 5,
+		Hz = 6,
+		deg = 7,
+		s = 8,
+		ohm = 9,
+		H = 10,
+		F = 11,
+		J = 12,
+		N = 13,
+		Pa = 14,
+		S = 15,
+		VAh = 16,
+		VArh = 17,
+		Wh = 18,
+		degC = 19,
+		g = 20,
+		h = 21,
+		m = 22,
+		m2 = 23,
+		m3 = 24,
+		min = 25,
+		rad = 26
+	}
 }

@@ -129,6 +129,8 @@ namespace FTN.Services.NetworkModelService
 				// insert specified properties
 				foreach (ModelCode propId in properties)
 				{
+					if (!io.HasProperty(propId))
+						continue;
 					property = new Property(propId);
 					io.GetProperty(property);
 					rd.AddProperty(property);
@@ -230,7 +232,7 @@ namespace FTN.Services.NetworkModelService
 
 		public UpdateResult ApplyDelta(Delta delta)
 		{
-			bool applyingStarted = false;
+            bool applyingStarted = false;
 			UpdateResult updateResult = new UpdateResult();
 
 			try
@@ -241,7 +243,8 @@ namespace FTN.Services.NetworkModelService
 				Dictionary<long, long> globalIdPairs = new Dictionary<long, long>();
 				delta.FixNegativeToPositiveIds(ref typesCounters, ref globalIdPairs);
 				updateResult.GlobalIdPairs = globalIdPairs;
-				delta.SortOperations();
+                Delta.ResourceDescs = this.resourcesDescs;
+                delta.SortOperations();
 
 				applyingStarted = true;
 

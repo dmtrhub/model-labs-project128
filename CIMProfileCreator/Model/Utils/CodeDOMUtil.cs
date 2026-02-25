@@ -143,37 +143,51 @@ namespace FTN.ESI.SIMES.CIM.Model.Utils
         public void WriteFiles(string assemblyVersion)
         {
             OnMessage("\r\n\t--------------Writing files--------------");
+            
+            // ✅ ISPRAVLJENO - Koristi apsolutnu putanju
+            string appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string classesDirectory = System.IO.Path.Combine(appPath, "classes");
+            
+            // Kreiraj direktorijum ako ne postoji
+            if (!System.IO.Directory.Exists(classesDirectory))
+            {
+                System.IO.Directory.CreateDirectory(classesDirectory);
+                OnMessage("\r\nClasses Directory Created: " + classesDirectory);
+            }
+            
             int counter = 0;
             foreach(CodeCompileUnit unit in Files)
             {
                 if(unit != null)
                 {
-					if (unit.Namespaces[0].Types[0].Name.Equals("IDClass"))
-					{
-						CodeTypeReference attr = new CodeTypeReference("AssemblyVersion");
-						CodeAttributeDeclaration decl = new CodeAttributeDeclaration(attr, new CodeAttributeArgument(new CodePrimitiveExpression(assemblyVersion)));
-						unit.AssemblyCustomAttributes.Add(decl);
-					}
+                    if (unit.Namespaces[0].Types[0].Name.Equals("IDClass"))
+                    {
+                        CodeTypeReference attr = new CodeTypeReference("AssemblyVersion");
+                        CodeAttributeDeclaration decl = new CodeAttributeDeclaration(attr, new CodeAttributeArgument(new CodePrimitiveExpression(assemblyVersion)));
+                        unit.AssemblyCustomAttributes.Add(decl);
+                    }
+                    
+                    // ✅ APSOLUTNA PUTANJA
                     String sourceFile;
                     if(provider.FileExtension[0] == '.')
                     {
-                        sourceFile = ".\\classes\\" + unit.Namespaces[0].Types[0].Name + provider.FileExtension;
+                        sourceFile = System.IO.Path.Combine(classesDirectory, unit.Namespaces[0].Types[0].Name + provider.FileExtension);
                     }
                     else
                     {
-                        sourceFile = ".\\classes\\" + unit.Namespaces[0].Types[0].Name + "." + provider.FileExtension;
+                        sourceFile = System.IO.Path.Combine(classesDirectory, unit.Namespaces[0].Types[0].Name + "." + provider.FileExtension);
                     }
-                    if(!System.IO.Directory.Exists(".\\classes\\"))
-                    {
-                        System.IO.Directory.CreateDirectory(".\\classes\\");
-                    }
+                    
+                    OnMessage("\r\nWriting: " + sourceFile);
+                    
                     IndentedTextWriter tw = new IndentedTextWriter(new StreamWriter(sourceFile, false), "    ");
                     provider.GenerateCodeFromCompileUnit(unit, tw, new CodeGeneratorOptions());
                     tw.Close();
                     counter++;
                 }
             }
-            OnMessage("\r\nTOTAL UNITS:" + counter);
+            OnMessage("\r\nTOTAL UNITS WRITTEN: " + counter);
+            OnMessage("\r\nFiles written to: " + classesDirectory);
             OnMessage("\r\n\t----------Done writing files----------");
         }
 
@@ -199,31 +213,39 @@ namespace FTN.ESI.SIMES.CIM.Model.Utils
             {
                 if(unit != null)
                 {
-					String sourceFile = ".\\classes\\" + unit.Namespaces[0].Types[0].Name + ".cs";
-					paths.Add(sourceFile);
+                    String sourceFile = ".\\classes\\" + unit.Namespaces[0].Types[0].Name + ".cs";
+                    paths.Add(sourceFile);
                 }
             }
 
-			string currentContent = String.Empty;
-			string filePath = ".\\classes\\IDClass.cs";
-			string newContent = "using System.Reflection;\nusing System.Runtime.CompilerServices;\nusing System.Runtime.InteropServices;\n";
-			if (File.Exists(filePath))
-			{
-				currentContent = File.ReadAllText(filePath);
-			}
-			File.WriteAllText(filePath, newContent + currentContent);
+            string currentContent = String.Empty;
+            string filePath = ".\\classes\\IDClass.cs";
+            string newContent = "using System.Reflection;\nusing System.Runtime.CompilerServices;\nusing System.Runtime.InteropServices;\n";
+            if (File.Exists(filePath))
+            {
+                currentContent = File.ReadAllText(filePath);
+            }
+            File.WriteAllText(filePath, newContent + currentContent);
 
+            // ✅ DODATA TAČAN PATH - KORISTI APSOLUTNI PATH
+            string appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string dllDirectory = System.IO.Path.Combine(appPath, "DLL");
+            string outputAssembly = System.IO.Path.Combine(dllDirectory, fileName + ".dll");
+
+            OnMessage("\r\nOutput Directory: " + dllDirectory);
+            OnMessage("\r\nOutput DLL: " + outputAssembly);
 
             CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateExecutable = false;
-            parameters.GenerateInMemory = true;
-            parameters.OutputAssembly = ".\\DLL\\" + fileName + ".dll";
+            parameters.GenerateInMemory = false;
+            parameters.OutputAssembly = outputAssembly;  // ✅ APSOLUTNI PATH!
             parameters.ReferencedAssemblies.Add("System.dll");
             parameters.TreatWarningsAsErrors = false;
 
-            if(!System.IO.Directory.Exists(".\\DLL\\"))
+            if(!System.IO.Directory.Exists(dllDirectory))
             {
-                System.IO.Directory.CreateDirectory(".\\DLL\\");
+                System.IO.Directory.CreateDirectory(dllDirectory);
+                OnMessage("\r\nDLL Directory Created: " + dllDirectory);
             }
 
             CompilerResults cr = provider.CompileAssemblyFromFile(parameters, paths.ToArray());
@@ -239,8 +261,20 @@ namespace FTN.ESI.SIMES.CIM.Model.Utils
             }
             else
             {
-                OnMessage("\r\nSource built into with no errors.");
-
+                OnMessage("\r\nSource built successfully!");
+                OnMessage("\r\nDLL saved at: " + outputAssembly);
+                
+                // ✅ VERIFIKACIJA - Proverava da li DLL postoji
+                if(File.Exists(outputAssembly))
+                {
+                    OnMessage("\r\n✓ DLL FILE VERIFIED - File exists at: " + outputAssembly);
+                    FileInfo fileInfo = new FileInfo(outputAssembly);
+                    OnMessage("\r\nFile Size: " + fileInfo.Length + " bytes");
+                }
+                else
+                {
+                    OnMessage("\r\n✗ ERROR - DLL file NOT found at: " + outputAssembly);
+                }
             }
             OnMessage("\r\n\t----------Done compiling code----------");
         }

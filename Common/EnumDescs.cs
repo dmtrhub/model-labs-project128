@@ -14,7 +14,19 @@ namespace FTN.Common
 			property2enumType.Add(ModelCode.CONDEQ_PHASES, typeof(PhaseCode));
 			property2enumType.Add(ModelCode.POWERTR_FUNC, typeof(TransformerFunction));
 			property2enumType.Add(ModelCode.POWERTRWINDING_CONNTYPE, typeof(WindingConnection));
-			property2enumType.Add(ModelCode.POWERTRWINDING_WINDTYPE, typeof(WindingType));														
+			property2enumType.Add(ModelCode.POWERTRWINDING_WINDTYPE, typeof(WindingType));
+			
+			
+			property2enumType.Add(ModelCode.SWITCHINGOPERATION_NEWSTATE, typeof(SwitchState));
+			property2enumType.Add(ModelCode.CURVE_CURVESTYLE, typeof(CurveStyle));
+			property2enumType.Add(ModelCode.CURVE_XMULTIPLIER, typeof(UnitMultiplier));
+			property2enumType.Add(ModelCode.CURVE_XUNIT, typeof(UnitSymbol));
+			property2enumType.Add(ModelCode.CURVE_Y1MULTIPLIER, typeof(UnitMultiplier));
+			property2enumType.Add(ModelCode.CURVE_Y1UNIT, typeof(UnitSymbol));
+			property2enumType.Add(ModelCode.CURVE_Y2MULTIPLIER, typeof(UnitMultiplier));
+			property2enumType.Add(ModelCode.CURVE_Y2UNIT, typeof(UnitSymbol));
+			property2enumType.Add(ModelCode.CURVE_Y3MULTIPLIER, typeof(UnitMultiplier));
+			property2enumType.Add(ModelCode.CURVE_Y3UNIT, typeof(UnitSymbol));
 		}
 
 		public List<string> GetEnumList(ModelCode propertyId)
