@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:j.0="http://iec.ch/TC57/CIM-generic#">
+
+    <!-- ============================================ -->
+    <!-- ===== CURVE ===== -->
+    <!-- ============================================ -->
+    <rdf:Description rdf:about="#CURVE_CUSTOM_1">
+        <rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#Curve"/>
+        <j.0:mRID>CURVE_CUSTOM_1</j.0:mRID>
+        <j.0:name>IME CURVE</j.0:name>
+        <j.0:description>OPIS (opciono)</j.0:description>
+        <!-- curveStyle: straightLineYValues, constantYValue, formula, rampYValue -->
+        <j.0:curveStyle>straightLineYValues</j.0:curveStyle>
+        <!-- xMultiplier, xUnit, y1Multiplier, y1Unit, itd. -->
+        <j.0:xMultiplier>none</j.0:xMultiplier>
+        <j.0:xUnit>A</j.0:xUnit>
+        <j.0:y1Multiplier>none</j.0:y1Multiplier>
+        <j.0:y1Unit>V</j.0:y1Unit>
+    </rdf:Description>
+
+    <!-- ============================================ -->
+    <!-- ===== CURVE DATA ===== -->
+    <!-- ============================================ -->
+    <rdf:Description rdf:about="#CURVEDATA_CUSTOM_1">
+        <rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#CurveData"/>
+        <j.0:mRID>CURVEDATA_CUSTOM_1</j.0:mRID>
+        <j.0:name>IME CURVEDATA TAČKE</j.0:name>
+        <j.0:xvalue>10.5</j.0:xvalue>
+        <j.0:y1value>220.0</j.0:y1value>
+        <j.0:y2value>0.0</j.0:y2value>
+        <j.0:y3value>0.0</j.0:y3value>
+        <!-- Referenca na Curve (mora da postoji) -->
+        <j.0:Curve rdf:resource="#CURVE_CUSTOM_1"/>
+    </rdf:Description>
+
+    <!-- ============================================ -->
+    <!-- ===== REGULAR INTERVAL SCHEDULE ===== -->
+    <!-- ============================================ -->
+    <rdf:Description rdf:about="#REGSCHEDULE_CUSTOM_1">
+        <rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#RegularIntervalSchedule"/>
+        <j.0:mRID>REGSCHEDULE_CUSTOM_1</j.0:mRID>
+        <j.0:name>IME REDOVNOG RASPOREDA</j.0:name>
+        <j.0:description>OPIS (opciono)</j.0:description>
+        <!-- ISO 8601 format: YYYY-MM-DDTHH:MM:SS -->
+        <j.0:startTime>2024-02-14T08:00:00</j.0:startTime>
+        <j.0:endTime>2024-02-14T16:00:00</j.0:endTime>
+        <!-- timeStep u sekundama -->
+        <j.0:timeStep>3600</j.0:timeStep>
+    </rdf:Description>
+
+    <!-- ============================================ -->
+    <!-- ===== REGULAR TIME POINT ===== -->
+    <!-- ============================================ -->
+    <rdf:Description rdf:about="#REGTIMEPOINT_CUSTOM_1">
+        <rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#RegularTimePoint"/>
+        <j.0:mRID>REGTIMEPOINT_CUSTOM_1</j.0:mRID>
+        <j.0:name>IME VREMENSKE TAČKE</j.0:name>
+        <!-- sequenceNumber: redni broj u rasporedu -->
+        <j.0:sequenceNumber>1</j.0:sequenceNumber>
+        <j.0:value1>100.5</j.0:value1>
+        <j.0:value2>50.2</j.0:value2>
+        <!-- Referenca na RegularIntervalSchedule (mora da postoji) -->
+        <j.0:IntervalSchedule rdf:resource="#REGSCHEDULE_CUSTOM_1"/>
+    </rdf:Description>
+
+    <!-- ============================================ -->
+    <!-- ===== IRREGULAR INTERVAL SCHEDULE ===== -->
+    <!-- ============================================ -->
+    <rdf:Description rdf:about="#IRREGSCHEDULE_CUSTOM_1">
+        <rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#IrregularIntervalSchedule"/>
+        <j.0:mRID>IRREGSCHEDULE_CUSTOM_1</j.0:mRID>
+        <j.0:name>IME NEREDOVNOG RASPOREDA</j.0:name>
+        <j.0:description>OPIS (opciono)</j.0:description>
+        <!-- ISO 8601 format -->
+        <j.0:startTime>2024-02-14T09:00:00</j.0:startTime>
+    </rdf:Description>
+
+    <!-- ============================================ -->
+    <!-- ===== IRREGULAR TIME POINT ===== -->
+    <!-- ============================================ -->
+    <rdf:Description rdf:about="#IRREGTIMEPOINT_CUSTOM_1">
+        <rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#IrregularTimePoint"/>
+        <j.0:mRID>IRREGTIMEPOINT_CUSTOM_1</j.0:mRID>
+        <j.0:name>IME VREMENSKE TAČKE</j.0:name>
+        <!-- time: vremenska razlika od početka rasporeda (sekunde) -->
+        <j.0:time>120.5</j.0:time>
+        <j.0:value1>95.5</j.0:value1>
+        <j.0:value2>48.2</j.0:value2>
+        <!-- Referenca na IrregularIntervalSchedule (mora da postoji) -->
+        <j.0:IntervalSchedule rdf:resource="#IRREGSCHEDULE_CUSTOM_1"/>
+    </rdf:Description>
+
+    <!-- ============================================ -->
+    <!-- ===== OUTAGE SCHEDULE ===== -->
+    <!-- ============================================ -->
+    <rdf:Description rdf:about="#OUTAGE_CUSTOM_1">
+        <rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#OutageSchedule"/>
+        <j.0:mRID>OUTAGE_CUSTOM_1</j.0:mRID>
+        <j.0:name>IME RASPOREDA KVARA</j.0:name>
+        <j.0:description>OPIS (opciono)</j.0:description>
+        <!-- ISO 8601 format -->
+        <j.0:startTime>2024-02-14T08:00:00</j.0:startTime>
+    </rdf:Description>
+
+    <!-- ============================================ -->
+    <!-- ===== SWITCHING OPERATION ===== -->
+    <!-- ============================================ -->
+    <!-- NAPOMENA: Switches lista se popunjava automatski iz Switch→SwitchingOperations reference -->
+    <rdf:Description rdf:about="#SWOP_CUSTOM_1">
+        <rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#SwitchingOperation"/>
+        <j.0:mRID>SWOP_CUSTOM_1</j.0:mRID>
+        <j.0:name>IME OPERACIJE</j.0:name>
+        <j.0:description>OPIS (opciono)</j.0:description>
+        <!-- newState: open ili close -->
+        <j.0:newState>open</j.0:newState>
+        <!-- operationTime: ISO 8601 format -->
+        <j.0:operationTime>2024-02-14T10:00:00</j.0:operationTime>
+        <!-- OutageSchedule referenca (opciono) -->
+        <j.0:OutageSchedule rdf:resource="#OUTAGE_CUSTOM_1"/>
+    </rdf:Description>
+
+    <!-- ============================================ -->
+    <!-- ===== SWITCH ===== -->
+    <!-- ============================================ -->
+    <rdf:Description rdf:about="#SW_CUSTOM_1">
+        <rdf:type rdf:resource="http://iec.ch/TC57/CIM-generic#Switch"/>
+        <j.0:mRID>SW_CUSTOM_1</j.0:mRID>
+        <j.0:name>IME PREKIDAČA</j.0:name>
+        <j.0:description>OPIS (opciono)</j.0:description>
+        <!-- SwitchingOperations referenca (M:0..1, opciono) -->
+        <!-- Upiši mRID postojeće SwitchingOperation, ili je izostavi ako nema -->
+        <j.0:SwitchingOperations rdf:resource="#SWOP_CUSTOM_1"/>
+    </rdf:Description>
+
+</rdf:RDF>
