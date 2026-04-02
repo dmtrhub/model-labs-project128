@@ -462,8 +462,6 @@ Results rendered in TreeView with property values & enum translations
 
 ### Model Labs App (Data Import)
 
----
-
 ![Model Labs App](docs/images/model-labs-app.png)
 
 ---
@@ -535,13 +533,13 @@ Results rendered in TreeView with property values & enum translations
 
 ### Key Validation Points
 
-- ✅ Enum values translate correctly (0 → "open", 1 → "close")
-- ✅ GIDs are unique and consistent
-- ✅ Reference properties point to valid entities
-- ✅ Inherited properties appear in GetAllPropertyIds()
-- ✅ Delta operations maintain dependency ordering
-- ✅ Service starts and accepts WCF calls within 5 seconds
-- ✅ XML results are well-formed and validate against schema
+- Enum values translate correctly (0 → "open", 1 → "close")
+- GIDs are unique and consistent
+- Reference properties point to valid entities
+- Inherited properties appear in GetAllPropertyIds()
+- Delta operations maintain dependency ordering
+- Service starts and accepts WCF calls within 5 seconds
+- XML results are well-formed and validate against schema
 
 ---
 
@@ -595,11 +593,11 @@ Delta
 
 This is a student portfolio project submitted for university defense. It demonstrates:
 
-- ✅ Complete understanding of CIM/RDF standards
-- ✅ Advanced C# architecture patterns
-- ✅ WCF distributed system design
-- ✅ Data model generation and persistence
-- ✅ Professional documentation practices
+- Complete understanding of CIM/RDF standards
+- Advanced C# architecture patterns
+- WCF distributed system design
+- Data model generation and persistence
+- Professional documentation practices
 
 Suggestions and feedback are welcome via GitHub issues!
 
